@@ -1,0 +1,11 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+luma.oled = "3.15.0"
+python-escpos = "3.1"
+
+[requires]
+python_version = "3.13"
