@@ -1,0 +1,13 @@
+[project]
+name = "portable-momir-vig"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ijson>=3.5.0",
+    "luma-oled>=3.15.0",
+    "python-escpos>=3.1",
+    "requests>=2.33.0",
+    "urllib3>=2.6.3",
+]
