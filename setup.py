@@ -2,6 +2,7 @@ import requests
 import os
 from PIL import Image
 from io import BytesIO
+import json
 
 # get bulk data (metadata about all bulk data jsons)
 # https://scryfall.com/docs/api/bulk-data
@@ -19,10 +20,16 @@ for data in bulk_data['data']:
         
 
 print("Getting oracle cards")
-resp = requests.get(oracle_cards_uri)
-resp.raise_for_status()
-oracle_cards = resp.json()
-resp = None
+oracle_cards = None
+if os.path.exists("oracle_cards.json"):
+    with open("oracle_cards.json", 'r') as f:
+        oracle_cards = json.load(f)
+else:
+    resp = requests.get(oracle_cards_uri)
+    resp.raise_for_status()
+    oracle_cards = resp.json()
+    with open("oracle_cards.json", 'w') as f:
+        json.dump(oracle_cards,f)
 
 for card in oracle_cards[:50]:
     if 'Creature' in card['type_line']:
