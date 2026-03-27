@@ -29,7 +29,7 @@ else:
     resp.raise_for_status()
     oracle_cards = resp.json()
     with open("oracle_cards.json", 'w') as f:
-        json.dump(oracle_cards,f)
+        json.dump(oracle_cards, f)
 
 for card in oracle_cards[:50]:
     if 'Creature' in card['type_line']:
