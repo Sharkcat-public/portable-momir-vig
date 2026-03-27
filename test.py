@@ -11,11 +11,12 @@ with canvas(device) as draw:
     
 # https://python-escpos.readthedocs.io/en/latest/    
 # from escpos.printer import Serial
-# p = Serial(devfile='/dev/serial0,
+# p = Serial(devfile='/dev/serial0',
 #            baudrate=9600,
 #            bytesize=8,
 #            parity='N',
 #            stopbits=1,
 #            timeout=1.00,
 #            dsrdtr=True)
-# p.text("Hello World\n")    
+# p.text("Hello World\n")
+# p.image("cards/4/Nissa, Worldsoul Speaker.jpg")
