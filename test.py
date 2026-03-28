@@ -1,3 +1,4 @@
+print('starting')
 # https://ssd1306.readthedocs.io/en/latest/python-usage.html
 # https://pillow.readthedocs.io/en/latest/reference/ImageDraw.html#module-PIL.ImageDraw
 from luma.oled.device import sh1106
@@ -11,14 +12,16 @@ import os
 import random
 import time
 
+print('display setup')
 # 132x64 sh1106 display
 serial = i2c(port=1, address=0x3C)
 device = sh1106(serial)
 device.show()
 
+print('button setup')
 # 2 buttons
-left_button = Button(17)
-right_button = Button(27)
+left_button = Button(17, bounce_time=0.3)
+right_button = Button(27, bounce_time=0.3)
 
 current_card = None
 current_cost = 0
@@ -53,6 +56,7 @@ def choose_random_card(cost):
 
 def get_card():
     current_card = choose_random_card(current_cost)
+    print_card(os.path.join('cards',str(current_cost),current_card))
 
 right_button.when_pressed = get_card
 
@@ -68,4 +72,5 @@ def print_card(path):
     # 4 newlines to push card out of printer
     p.text('\n\n\n\n')
 
+print('ready')
 pause()
