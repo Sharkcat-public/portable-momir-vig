@@ -18,6 +18,13 @@ def display_mana_choice():
         draw.rectangle(device.bounding_box, outline="white", fill="black")
         draw.text((5, 20), f"Choice: {str(current_cost)} mana", fill="white")
 
+def display_shutdown_confirm():
+    with canvas(device) as draw:
+        draw.rectangle(device.bounding_box, outline="white", fill="black")
+        draw.text((5, 20), f"Do you want to shutdown?", fill="white")
+        draw.text((5, 40), f"Yes", fill="white")
+        draw.text((50, 40), f"No", fill="white")
+
 def up_cost():
     global current_cost
     global available_cmc
@@ -88,7 +95,9 @@ def right_button_func():
 
 def accept_button_func():
     global current_state
-    if current_state == 0:
+    if current_state == -1:
+        os.system("shutdown now -h")
+    elif current_state == 0:
         roll_random_card()
         current_state += 1
     elif current_state == 1:
@@ -99,9 +108,11 @@ def accept_button_func():
 
 def back_button_func():
     global current_state
-    if current_state == 0:
-        #TODO: os.shutdown???
-        pass
+    if current_state == -1:
+        current_state += 1
+        display_mana_choice()
+    elif current_state == 0:
+        display_shutdown_confirm()
     elif current_state == 1:
         current_state -= 1
         display_mana_choice()
@@ -129,6 +140,7 @@ for c in os.listdir('cards'):
 available_cmc.sort()
 
 # states:
+# -1: shutdown
 # 0: mana choice
 # 1: card gen
 # 2: card print

@@ -43,8 +43,8 @@ for card in ijson.items(parser, 'item'):
             img = Image.open(BytesIO(resp.content))
             img = img.convert('L').resize((360,int((360/img.width)*img.height)))
             img.save(card_path)
+            i = i + 1
         except Exception as e:
-            log.write(f'{time.time()-start_time} Unable to add creature card["name"]\n')
+            log.write(f"{time.time()-start_time} Unable to add creature {card.get('name')}\n")
             log.write(str(e))
             log.write('\n')
-        i = i + 1
