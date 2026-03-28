@@ -23,16 +23,24 @@ print('button setup')
 left_button = Button(17, bounce_time=0.3)
 right_button = Button(27, bounce_time=0.3)
 
+available_cmc = []
+for c in os.listdir('cards'):
+    available_cmc.append(int(c))
+available_cmc.sort()
 current_card = None
-current_cost = 0
+current_cost = available_cmc[0]
 with canvas(device) as draw:
     draw.rectangle(device.bounding_box, outline="white", fill="black")
     draw.text((5, 20), f"Choice: {str(current_cost)} mana", fill="white")
 
 def up_cost():
-    current_cost += 1
-    if current_cost > 8:
-        current_cost = 0
+    global current_cost
+    global available_cmc
+    current_index = available_cmc.index(current_cost)
+    current_index += 1
+    if current_index >= len(available_cmc):
+        current_index = 0
+    current_cost = available_cmc[current_index]
     with canvas(device) as draw:
         draw.rectangle(device.bounding_box, outline="white", fill="black")
         draw.text((5, 20), f"Choice: {str(current_cost)} mana", fill="white")
@@ -55,6 +63,7 @@ def choose_random_card(cost):
     return chosen_card
 
 def get_card():
+    global current_card
     current_card = choose_random_card(current_cost)
     print_card(os.path.join('cards',str(current_cost),current_card))
 
