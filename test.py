@@ -1,3 +1,9 @@
+#TODO
+# add timestamps to stdout
+# better text output (alignment, splitting into multiple lines)
+# better text for card display (or show the card image)
+# move to main.py
+
 print('starting')
 # https://ssd1306.readthedocs.io/en/latest/python-usage.html
 # https://pillow.readthedocs.io/en/latest/reference/ImageDraw.html#module-PIL.ImageDraw
@@ -99,6 +105,7 @@ def right_button_func():
 def accept_button_func():
     global current_state
     if current_state == -1:
+        device.hide()
         os.system("shutdown now -h")
     elif current_state == 0:
         roll_random_card()
@@ -115,6 +122,7 @@ def back_button_func():
         current_state += 1
         display_mana_choice()
     elif current_state == 0:
+        current_state -= 1
         display_shutdown_confirm()
     elif current_state == 1:
         current_state -= 1
@@ -154,3 +162,4 @@ display_mana_choice()
 
 print('ready')
 pause()
+device.hide()
