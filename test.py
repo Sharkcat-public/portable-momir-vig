@@ -138,7 +138,7 @@ accept_button.when_pressed = accept_button_func
 back_button.when_pressed = back_button_func
 
 available_cmc = []
-for c in os.listdir(get_working_dir(), 'cards'):
+for c in os.listdir(os.path.join(get_working_dir(), 'cards')):
     available_cmc.append(int(c))
 available_cmc.sort()
 
