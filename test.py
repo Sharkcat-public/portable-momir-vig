@@ -12,6 +12,9 @@ import os
 import random
 import time
 
+def get_working_dir():
+    return os.path.dirname(os.path.realpath(__file__))
+
 def display_mana_choice():
     global current_cost
     with canvas(device) as draw:
@@ -52,7 +55,7 @@ def roll_random_card():
         draw.text((5, 20), "Choosing random", fill="white")
         draw.text((5, 40), f"{str(current_cost)} cost card", fill="white")
     time.sleep(2)
-    cards = os.listdir(os.path.join("cards", str(current_cost)))
+    cards = os.listdir(os.path.join(get_working_dir(), "cards", str(current_cost)))
     choice = random.randint(0,len(cards)-1)
     current_card = cards[choice]
     with canvas(device) as draw:
@@ -72,7 +75,7 @@ def print_card():
                stopbits=1,
                timeout=1.00,
                dsrdtr=True)
-    p.image(os.path.join('cards',str(current_cost),current_card))
+    p.image(os.path.join(get_working_dir(), 'cards',str(current_cost),current_card))
     # 4 newlines to push card out of printer
     p.text('\n\n\n\n')
 
@@ -135,7 +138,7 @@ accept_button.when_pressed = accept_button_func
 back_button.when_pressed = back_button_func
 
 available_cmc = []
-for c in os.listdir('cards'):
+for c in os.listdir(get_working_dir(), 'cards'):
     available_cmc.append(int(c))
 available_cmc.sort()
 
