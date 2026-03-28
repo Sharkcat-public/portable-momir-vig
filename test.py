@@ -54,6 +54,10 @@ def roll_random_card():
 
 def print_card():
     global current_card
+    with canvas(device) as draw:
+        draw.rectangle(device.bounding_box, outline="white", fill="black")
+        draw.text((5, 20), "Printing", fill="white")
+        draw.text((5, 40), current_card.replace('.jpg',''), fill="white")
     p = Serial(devfile='/dev/serial0',
                baudrate=9600,
                bytesize=8,
@@ -70,7 +74,7 @@ def left_button_func():
     if current_state == 0:
         down_cost()
         display_mana_choice()
-    if current_state == 1:
+    elif current_state == 1:
         roll_random_card()
         
 
@@ -79,7 +83,7 @@ def right_button_func():
     if current_state == 0:
         up_cost()
         display_mana_choice()
-    if current_state == 1:
+    elif current_state == 1:
         roll_random_card()
 
 def accept_button_func():
@@ -87,17 +91,18 @@ def accept_button_func():
     if current_state == 0:
         roll_random_card()
         current_state += 1
-    if current_state == 1:
+    elif current_state == 1:
         current_state += 1
         print_card()
         current_state = 0
+        display_mana_choice()
 
 def back_button_func():
     global current_state
     if current_state == 0:
         #TODO: os.shutdown???
         pass
-    if current_state == 1:
+    elif current_state == 1:
         current_state -= 1
         display_mana_choice()
 
