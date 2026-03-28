@@ -7,8 +7,8 @@ from urllib import request
 # thank you ijson https://github.com/ICRAR/ijson
 import ijson
 
-start_time = time.time()
 log = open('log.log', 'a')
+log.write(f"\n{time.strftime("%Y-%m-%d %H:%M:%S")} Setup\n")
 # get bulk data (metadata about all bulk data jsons)
 # https://scryfall.com/docs/api/bulk-data
 print("getting bulk data")
@@ -45,6 +45,6 @@ for card in ijson.items(parser, 'item'):
             img.save(card_path)
             i = i + 1
         except Exception as e:
-            log.write(f"{time.time()-start_time} Unable to add creature {card.get('name')}\n")
+            log.write(f"{time.strftime("%Y-%m-%d %H:%M:%S")} Unable to add creature {card.get('name')}\n")
             log.write(str(e))
             log.write('\n')
