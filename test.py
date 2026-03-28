@@ -20,7 +20,8 @@ while not valid:
 # https://pillow.readthedocs.io/en/latest/reference/ImageDraw.html#module-PIL.ImageDraw
 with canvas(device) as draw:
     draw.rectangle(device.bounding_box, outline="white", fill="black")
-    draw.text((5, 40), f"Choosing random {cost} cost card", fill="white")
+    draw.text((5, 20), "Choosing random", fill="white")
+    draw.text((5, 40), f"{cost} cost card", fill="white")
 
 time.sleep(3)
 cards = os.listdir(os.path.join("cards", str(cost)))
