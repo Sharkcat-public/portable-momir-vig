@@ -1,8 +1,8 @@
 #TODO
-# add timestamps to stdout
 # better text output (alignment, splitting into multiple lines)
 # better text for card display (or show the card image)
 # better rng
+# check printer width and try to get it centered, also maybe less \n printed
 
 import os
 import random
@@ -93,7 +93,6 @@ def left_button_func():
     elif current_state == 1:
         roll_random_card()
         
-
 def right_button_func():
     global current_state
     if current_state == 0:

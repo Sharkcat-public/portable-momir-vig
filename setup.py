@@ -32,17 +32,33 @@ for card in ijson.items(parser, 'item'):
     if ('Creature' in card['type_line']) and ('Token' not in card['type_line']):
         try:
             converted_mana_cost = int(card['cmc'])
-            img_uri = card['image_uris']['normal']
             card_path = os.path.join("cards", str(converted_mana_cost), card['name']+'.jpg')
             if os.path.exists(card_path):
                 continue
             print(f"Adding {card['name']}")
             os.makedirs(os.path.dirname(card_path), exist_ok=True)
-            resp = requests.get(img_uri)
-            resp.raise_for_status()
-            img = Image.open(BytesIO(resp.content))
-            img = img.convert('L').resize((360,int((360/img.width)*img.height)))
-            img.save(card_path)
+            if card.get('card_faces') and card.get('card_faces')[0].get('image_uris') and card.get('card_faces')[1].get('image_uris'):
+                front_img_uri = card.get('card_faces')[0]['image_uris']['normal']
+                back_img_uri = card.get('card_faces')[1]['image_uris']['normal']
+                resp = requests.get(front_img_uri)
+                front_img = Image.open(BytesIO(resp.content))
+                resp = requests.get(back_img_uri)
+                back_img = Image.open(BytesIO(resp.content))
+                front_img = front_img.convert('L').resize((360,int((360/front_img.width)*front_img.height)))
+                back_img = back_img.convert('L').resize((360,int((360/back_img.width)*back_img.height)))
+                img = Image.new('L', (front_img.width, front_img.height+back_img.height),'white')
+                img.paste(front_img, (0,0))
+                img.paste(back_img, (0, front_img.height))
+                img.save(card_path)
+            elif card.get('image_uris'):
+                img_uri = card['image_uris']['normal']
+                resp = requests.get(img_uri)
+                resp.raise_for_status()
+                img = Image.open(BytesIO(resp.content))
+                img = img.convert('L').resize((360,int((360/img.width)*img.height)))
+                img.save(card_path)
+            else:
+                print(f"This is a weird card {i} {card.get('name')} Can't add")
             i = i + 1
         except Exception as e:
             log.write(f"{time.strftime("%Y-%m-%d %H:%M:%S")} Unable to add creature {card.get('name')}\n")

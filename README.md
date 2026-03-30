@@ -17,7 +17,7 @@
 	After=boot-complete.target
 	
 	[Service]
-	ExecStart=/bin/bash -c '/home/sharkcat/Documents/portable-momir-vig/.venv/bin/python /home/sharkcat/Documents/portable-momir-vig/main.py > /home/sharkcat/Documents/portable-momir-vig/log.log 2>&1'
+	ExecStart=/bin/bash -c '/home/sharkcat/Documents/portable-momir-vig/.venv/bin/python /home/sharkcat/Documents/portable-momir-vig/main.py >> /home/sharkcat/Documents/portable-momir-vig/log.log 2>&1'
 	
 	[Install]
 	WantedBy=boot-complete.target
